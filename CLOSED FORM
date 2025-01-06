@@ -1,0 +1,18 @@
+
+def normal_equation(X,Y):
+    h=inv(X.T@X)
+    W=h@X.T@Y
+    return W
+
+# h(W)
+def lr_predict(X,W):
+    return np.dot(X,W)
+
+def closed_form_lr(X,Y):
+    W=normal_equation(X,Y)
+    y_hat=lr_predict(X,W)
+    return y_hat
+
+def mse_loss(y_hat,y):
+    error=y_hat - y
+    return np.sum(error*error)/error.shape[0]
