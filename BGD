@@ -1,0 +1,15 @@
+def train_lr_bgd(X,Y,W,n_epochs,lr):
+    losses=[]
+
+    for i in range(n_epochs):
+        predictions=lr_predict(X,W)
+        error=predictions-Y
+
+        loss=mse_loss(predictions,Y)
+        losses.append(loss)
+
+
+        gradient=calc_gradient(X,error)
+        W=update_weights(W,lr,gradient)
+
+    return W,losses
