@@ -1,0 +1,31 @@
+
+t0=5
+t1=50000
+
+def learning_schedule(t):
+    return t0/(t+t1)
+
+#def train_lr_bgd(X,Y,W,n_epochs,lr):
+
+def train_lr_sgd(X,Y,W,n_epochs):
+    losses=[]
+    m=X.shape[0]
+    for epoch in range(n_epochs):
+        for iteration in range(m):
+            random_index = np.random.randint(m)
+            xi=X[random_index:random_index+1]
+            yi=Y[random_index:random_index+1]
+
+            predictions=lr_predict(xi,W)
+            error=predictions-yi
+
+            loss=mse_loss(predictions,yi)
+            losses.append(loss)
+
+
+            lr = learning_schedule(epoch*m + iteration)
+
+            gradient=calc_gradient(xi,error)
+            W=update_weights(W,lr,gradient)
+
+    return W,losses
